@@ -2,6 +2,8 @@ import { Component } from "react";
 import "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import MainNav from "./components/MainNav";
+import Button from "react-bootstrap/Button";
+import Container from "react-bootstrap/Container";
 
 class MyComponentClass extends Component {
     constructor(props) {
@@ -10,6 +12,14 @@ class MyComponentClass extends Component {
         this.state = {
             todoElem: "",
         };
+    }
+    shouldComponentUpdate(nextProps, nextState) {
+        /**
+         * Wird vor einem Update ausgeführt
+         * mit dem return von true oder false kann entschieden werden,
+         * ob ein Update durchgeführt werden soil oder nicht
+         */
+        return true;
     }
     componentDidUpdate(prevProps, prevState) {
         console.log("aktuelle props", this.props.name);
@@ -23,7 +33,23 @@ class MyComponentClass extends Component {
         }, 2000);
     }
     render() {
-        return <MainNav />;
+        return (
+            <div>
+                <MainNav />
+                <Container>
+                    <h1>{this.props.propName}Todo-List</h1>
+                    <div>
+                        <input
+                            onChange={this.changeName}
+                            value={this.state.name}
+                        />
+                    </div>
+                    <Button className="m-1" onClick={this.logIn}>
+                        Create New Task
+                    </Button>
+                </Container>
+            </div>
+        );
     }
 }
 export default MyComponentClass;
